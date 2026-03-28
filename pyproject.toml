@@ -1,6 +1,6 @@
 [project]
 name = "tradingview-mcp-server"
-version = "0.3.0"
+version = "0.4.0"
 description = "Advanced multi-agent AI trading framework and real-time market analysis MCP server"
 readme = "README.md"
 requires-python = ">=3.10"
