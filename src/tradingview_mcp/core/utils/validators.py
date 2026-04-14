@@ -27,6 +27,7 @@ EXCHANGE_SCREENER = {
     "bitget": "crypto",
     "bybit": "crypto",
     "okx": "crypto",
+    "mexc": "crypto",
     "bist": "turkey",
     # Egyptian Stock Market Support
     "egx": "egypt",

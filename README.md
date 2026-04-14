@@ -308,7 +308,7 @@ Every sponsor directly funds new features like Walk-Forward Backtesting, Twitter
 ## 📋 Roadmap
 
 - [x] TradingView technical analysis (30+ indicators)
-- [x] Multi-exchange screener (Binance, KuCoin, EGX, US stocks)
+- [x] Multi-exchange screener (Binance, KuCoin, MEXC, EGX, US stocks)
 - [x] Reddit sentiment analysis
 - [x] Live financial news (RSS)
 - [x] Yahoo Finance real-time prices

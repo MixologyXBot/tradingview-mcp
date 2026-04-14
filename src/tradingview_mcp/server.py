@@ -70,7 +70,7 @@ mcp = FastMCP(
     name="TradingView Multi-Market Screener",
     instructions=(
         "Multi-market screener backed by TradingView. "
-        "Supports crypto exchanges (KuCoin, Binance, Bybit, etc.) and stock markets "
+        "Supports crypto exchanges (KuCoin, Binance, Bybit, MEXC, etc.) and stock markets "
         "(EGX, BIST, NASDAQ, NYSE, Bursa Malaysia, HKEX, SSE, SZSE). "
         "Tools: top_gainers, top_losers, bollinger_scan, coin_analysis, multi_agent_analysis, "
         "volume_breakout_scanner, egx_market_overview, egx_sector_scan, and more."
@@ -85,7 +85,7 @@ def top_gainers(exchange: str = "KUCOIN", timeframe: str = "15m", limit: int = 2
     """Return top gainers for an exchange and timeframe using Bollinger Band analysis.
 
     Args:
-        exchange: Exchange name — crypto: KUCOIN, BINANCE, BYBIT; stocks: EGX, BIST, NASDAQ, NYSE, BURSA, HKEX, SSE, SZSE
+        exchange: Exchange name — crypto: KUCOIN, BINANCE, BYBIT, MEXC; stocks: EGX, BIST, NASDAQ, NYSE, BURSA, HKEX, SSE, SZSE
         timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M
         limit: Number of rows to return (max 50)
     """
@@ -98,7 +98,7 @@ def top_gainers(exchange: str = "KUCOIN", timeframe: str = "15m", limit: int = 2
 
 @mcp.tool()
 def top_losers(exchange: str = "KUCOIN", timeframe: str = "15m", limit: int = 25) -> list[dict]:
-    """Return top losers for an exchange and timeframe. Supports crypto (KUCOIN, BINANCE) and stocks (EGX, BIST, NASDAQ)."""
+    """Return top losers for an exchange and timeframe. Supports crypto (KUCOIN, BINANCE, MEXC) and stocks (EGX, BIST, NASDAQ)."""
     exchange = sanitize_exchange(exchange, "KUCOIN")
     timeframe = sanitize_timeframe(timeframe, "15m")
     limit = max(1, min(limit, 50))
@@ -112,7 +112,7 @@ def bollinger_scan(exchange: str = "KUCOIN", timeframe: str = "4h", bbw_threshol
     """Scan for assets with low Bollinger Band Width (squeeze detection). Works with crypto and stocks.
 
     Args:
-        exchange: Exchange — crypto: KUCOIN, BINANCE, BYBIT; stocks: EGX, BIST, NASDAQ, NYSE, BURSA, HKEX, SSE, SZSE
+        exchange: Exchange — crypto: KUCOIN, BINANCE, BYBIT, MEXC; stocks: EGX, BIST, NASDAQ, NYSE, BURSA, HKEX, SSE, SZSE
         timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M
         bbw_threshold: Maximum BBW value to filter (default 0.04)
         limit: Number of rows to return (max 100)
@@ -129,7 +129,7 @@ def rating_filter(exchange: str = "KUCOIN", timeframe: str = "5m", rating: int =
     """Filter coins by Bollinger Band rating.
 
     Args:
-        exchange: Exchange name like KUCOIN, BINANCE, BYBIT, etc.
+        exchange: Exchange name like KUCOIN, BINANCE, BYBIT, MEXC, etc.
         timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M
         rating: BB rating (-3 to +3): -3=Strong Sell, -2=Sell, -1=Weak Sell, 1=Weak Buy, 2=Buy, 3=Strong Buy
         limit: Number of rows to return (max 50)
@@ -150,7 +150,7 @@ def coin_analysis(symbol: str, exchange: str = "KUCOIN", timeframe: str = "15m")
 
     Args:
         symbol: Symbol — crypto: "BTCUSDT", "ETHUSDT"; stocks: "COMI" (EGX), "THYAO" (BIST), "600519" (SSE), "300251" (SZSE)
-        exchange: Exchange — crypto: KUCOIN, BINANCE; stocks: EGX, BIST, NASDAQ, NYSE, BURSA, HKEX, SSE, SZSE
+        exchange: Exchange — crypto: KUCOIN, BINANCE, MEXC; stocks: EGX, BIST, NASDAQ, NYSE, BURSA, HKEX, SSE, SZSE
         timeframe: Time interval (5m, 15m, 1h, 4h, 1D, 1W, 1M)
 
     Returns:
@@ -249,7 +249,7 @@ def volume_breakout_scanner(
     """Detect coins with volume breakout + price breakout.
 
     Args:
-        exchange: Exchange name like KUCOIN, BINANCE, BYBIT, etc.
+        exchange: Exchange name like KUCOIN, BINANCE, BYBIT, MEXC, etc.
         timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M
         volume_multiplier: How many times the volume should be above normal level (default 2.0)
         price_change_min: Minimum price change percentage (default 3.0)
@@ -309,7 +309,7 @@ def multi_agent_analysis(symbol: str, exchange: str = "KUCOIN", timeframe: str =
 
     Args:
         symbol: Symbol — crypto: "BTCUSDT"; stocks: "COMI" (EGX), "THYAO" (BIST), "600519" (SSE), "300251" (SZSE)
-        exchange: Exchange — crypto: KUCOIN, BINANCE; stocks: EGX, BIST, NASDAQ, NYSE, SSE, SZSE
+        exchange: Exchange — crypto: KUCOIN, BINANCE, MEXC; stocks: EGX, BIST, NASDAQ, NYSE, SSE, SZSE
         timeframe: Time interval (5m, 15m, 1h, 4h, 1D, 1W)
 
     Returns:
@@ -442,7 +442,7 @@ def multi_timeframe_analysis(symbol: str, exchange: str = "KUCOIN") -> dict:
 
     Args:
         symbol: Symbol — crypto: "BTCUSDT"; stocks: "COMI" (EGX), "THYAO" (BIST), "600519" (SSE), "300251" (SZSE)
-        exchange: Exchange — crypto: KUCOIN, BINANCE; stocks: EGX, BIST, NASDAQ, NYSE, SSE, SZSE
+        exchange: Exchange — crypto: KUCOIN, BINANCE, MEXC; stocks: EGX, BIST, NASDAQ, NYSE, SSE, SZSE
     """
     exchange = sanitize_exchange(exchange, "KUCOIN")
     full_symbol = symbol.upper() if ":" in symbol else f"{exchange.upper()}:{symbol.upper()}"
@@ -481,11 +481,11 @@ def combined_analysis(symbol: str, exchange: str = "NASDAQ", timeframe: str = "1
 
     Args:
         symbol: Asset symbol ("AAPL", "BTCUSDT", "THYAO")
-        exchange: Exchange (NASDAQ, NYSE, BINANCE, KUCOIN, BIST, EGX)
+        exchange: Exchange (NASDAQ, NYSE, BINANCE, KUCOIN, MEXC, BIST, EGX)
         timeframe: Analysis timeframe (5m, 15m, 1h, 4h, 1D, 1W)
     """
     tech = coin_analysis(symbol, exchange, timeframe)
-    cat = "crypto" if exchange.upper() in ["BINANCE", "KUCOIN", "BYBIT"] else "stocks"
+    cat = "crypto" if exchange.upper() in ["BINANCE", "KUCOIN", "BYBIT", "MEXC"] else "stocks"
     sentiment = analyze_sentiment(symbol, category=cat)
     news = fetch_news_summary(symbol, category=cat, limit=5)
 
@@ -637,7 +637,7 @@ def exchanges_list() -> str:
                 return f"Available exchanges: {', '.join(sorted(exchanges))}"
     except Exception:
         pass
-    return "Common exchanges: KUCOIN, BINANCE, BYBIT, BITGET, OKX, COINBASE, GATEIO, HUOBI, BITFINEX, KRAKEN, BITSTAMP, BIST, EGX, NASDAQ"
+    return "Common exchanges: KUCOIN, BINANCE, BYBIT, MEXC, BITGET, OKX, COINBASE, GATEIO, HUOBI, BITFINEX, KRAKEN, BITSTAMP, BIST, EGX, NASDAQ"
 
 
 # ── Entry point ────────────────────────────────────────────────────────────────
